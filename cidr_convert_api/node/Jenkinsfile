@@ -14,18 +14,19 @@ pipeline {
           git credentialsId: 'f00ff383-c25e-4332-8f82-0a153badb25a', url: 'git@github.com:wizeline/wizeline-sre-opeyemi-alao.git'
         }
       }
-      stage {
-        steps {
-          sh 'cd ./cidr_conver_api/node/'
-        }
-      }
       stage('Install dependencies') {
         steps {
+          dir("folder") {
+            sh "pwd"
+          }
           sh 'npm install'
         }
       }
       stage('Test') {
         steps {
+          dir("working_dir") {
+            sh "pwd"
+          }
           sh 'npm test'
         }
       } 
