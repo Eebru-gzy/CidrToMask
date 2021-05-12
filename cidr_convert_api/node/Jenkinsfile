@@ -1,28 +1,28 @@
 pipeline {
     agent any
-
+    tools {nodejs "node"}
     stages {
-        stage('Starting') {
-          steps {
-            sh '''
-                echo Hello World
-                '''
-          }
+      stage('Starting') {
+        steps {
+          sh '''
+              echo Hello World
+              '''
         }
-        stage('Clone Repo') {
-          steps{
-            git credentialsId: 'f00ff383-c25e-4332-8f82-0a153badb25a', url: 'git@github.com:wizeline/wizeline-sre-opeyemi-alao.git'
-          }
+      }
+      stage('Clone Repo') {
+        steps{
+          git credentialsId: 'f00ff383-c25e-4332-8f82-0a153badb25a', url: 'git@github.com:wizeline/wizeline-sre-opeyemi-alao.git'
         }
-        stage('Build') {
-          steps {
-            sh 'npm install'
-          }
-        } 
-        stage('Test') {
-          steps {
-              sh 'echo Hello Test'
-          }
+      }
+      stage('Install dependencies') {
+        steps {
+          sh 'npm install'
         }
+      }
+      stage('Test') {
+        steps {
+          sh 'npm test'
+        }
+      } 
     }
 }
