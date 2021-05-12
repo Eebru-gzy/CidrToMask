@@ -5,7 +5,8 @@ pipeline {
       stage('Starting') {
         steps {
           sh '''
-              echo Hello World
+              rm -r folder*
+              rm -r workin*
               '''
         }
       }
@@ -16,18 +17,17 @@ pipeline {
       }
       stage('Install dependencies') {
         steps {
-          dir("folder") {
+          dir("cidr_convert_api/node") {
             sh "pwd"
+            sh 'npm install'
           }
-          sh 'npm install'
         }
       }
       stage('Test') {
         steps {
-          dir("working_dir") {
-            sh "pwd"
+          dir("cidr_convert_api/node") {
+            sh 'npm test'
           }
-          sh 'npm test'
         }
       } 
     }
