@@ -24,8 +24,10 @@ pipeline {
     } 
     stage('Check Test Failure') {
       steps {
+        when {
+          currentBuild.result == 'FAILURE'
+        }
         script {
-          currentBuild.result = 'FAILURE'
           error("Aborting the Pipeline, one or more test failed")
         }
       }
