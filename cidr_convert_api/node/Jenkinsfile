@@ -31,6 +31,7 @@ pipeline {
           sh '''
               docker build -t opeyemi-alao:THT .
               docker tag opeyemi-alao:THT wizelinedevops/opeyemi-alao:THT
+              docker push wizelinedevops/opeyemi-alao:THT
              '''
         }
       }
