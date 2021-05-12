@@ -22,15 +22,9 @@ pipeline {
         }
       }
     } 
-    stage('Check Test Failure') {
-      steps {
-        when {
-          currentBuild.result == 'FAILURE'
-        }
-        script {
-          error("Aborting the Pipeline, one or more test failed")
-        }
-      }
+    if (currentBuild.result == 'FAILURE') {
+      error("Aborting the Pipeline, one or more test failed")
+      return
     }
     stage('Docker Build') {
       steps {
