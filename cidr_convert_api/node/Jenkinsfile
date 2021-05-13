@@ -13,6 +13,9 @@ pipeline {
           sh "pwd"
           sh 'npm install'
           sh 'echo ${GIT_BRANCH}'
+          sh 'echo ${env.BRANCH_NAME}'
+          sh 'echo ${currentBuild.BRANCH_NAME}'
+          sh 'echo ${currentBuild}'
         }
       }
     }
@@ -39,7 +42,11 @@ pipeline {
     }
     stage ('Deploy to Dev Environment') {
       when {
-        branch 'origin/dev'
+        anyOf {
+          expression {currentBuild.BRANCH_NAME == 'origin/dev'}
+          expression {currentBuild.BRANCH_NAME == 'dev'}
+          expression{env.BRANCH_NAME != 'master'}
+        }
       }
       steps {
         sh 'kubectl --kubeconfig=${KUBECONFIG} --namespace=development set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
