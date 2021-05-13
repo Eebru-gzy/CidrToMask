@@ -40,7 +40,10 @@ pipeline {
     }
     stage ('Deploy to Dev Environment') {
       when {
-        sh '{$GIT_BRANCH == origin/dev}'
+        environment{
+          BRANCH_NAME = "${GIT_BRANCH.split("/")[1]}"
+        }
+        expression {env.BRANCH_NAME == 'dev'}
       }
       steps {
         sh 'kubectl --kubeconfig=${KUBECONFIG} --namespace=development set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
