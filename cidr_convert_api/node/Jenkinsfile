@@ -74,7 +74,7 @@ pipeline {
   }
 }
 
-// stage('Checking for test error') {
+// stage('Checking for test error') {//
 //   steps {
 //     if (currentBuild.result == 'FAILURE') {
 //       error("Aborting the Pipeline, one or more test failed")
