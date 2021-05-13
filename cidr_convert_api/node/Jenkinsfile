@@ -13,8 +13,7 @@ pipeline {
           sh "pwd"
           sh 'npm install'
           sh 'echo ${GIT_BRANCH}'
-          sh 'echo ${currentBuild.BRANCH_NAME}'
-          sh 'echo ${currentBuild}'
+          sh 'echo $currentBuild'
         }
       }
     }
