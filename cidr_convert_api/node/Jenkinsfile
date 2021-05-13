@@ -22,7 +22,7 @@ pipeline {
         }
       }
     } 
-    stage('Docker Build') {
+    stage('Docker Build and push') {
       when {
         expression {currentBuild.result != 'UNSTABLE'}
       }
@@ -33,6 +33,15 @@ pipeline {
               docker tag opeyemi-alao:THT wizelinedevops/opeyemi-alao:${BUILD_NUMBER} 
               docker push wizelinedevops/opeyemi-alao:${BUILD_NUMBER} 
              '''
+        }
+      }
+    }
+    stage('Push to staging') {
+      dir("cidr_convert_api/node") {
+        steps {
+          sshagent(['f00ff383-c25e-4332-8f82-0a153badb25a']) {
+            sh('git push origin staging') 
+          }
         }
       }
     }
