@@ -12,6 +12,8 @@ pipeline {
         dir("cidr_convert_api/node") {
           sh "pwd"
           sh 'npm install'
+          sh 'echo ${GIT_BRANCH}'
+          sh 'echo ${GIT_LOCAL_BRANCH}'
         }
       }
     }
