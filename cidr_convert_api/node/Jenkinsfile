@@ -3,7 +3,7 @@ pipeline {
   tools {nodejs "NodeJs"}
   environment{
     BRANCH_NAME = "${GIT_BRANCH.split("/")[1]}"
-    KUBECONFIG = credentialsId: 'KUBECONFIG'
+    KUBECONFIG = credentialsId('KUBECONFIG')
   }
   stages {
     stage('Clone Repo') {
