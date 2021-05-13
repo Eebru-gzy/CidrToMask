@@ -36,13 +36,28 @@ pipeline {
         }
       }
     }
-    stage('Push to staging') {
-      dir("cidr_convert_api/node") {
-        steps {
-          sshagent(['f00ff383-c25e-4332-8f82-0a153badb25a']) {
-            sh('git push origin staging') 
-          }
-        }
+    stage ('Deploy to Dev Environment') {
+      when {
+        branch 'dev'
+      }
+      steps {
+        sh 'kubectl --kubeconfig=${KUBECONFIG} --namespace=development set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
+      }
+    }
+    stage ('Deploy to staging Environment') {
+      when {
+        branch 'staging'
+      }
+      steps {
+        sh 'kubectl --kubeconfig=${KUBECONFIG} --namespace=staging set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
+      }
+    }
+    stage ('Deploy to Prod Environment') {
+      when {
+        branch 'master'
+      }
+      steps {
+        sh 'kubectl --kubeconfig=${KUBECONFIG} --namespace=production set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
       }
     }
   }
@@ -56,3 +71,13 @@ pipeline {
 //     }
 //   }
 // }
+
+// stage('Push to staging') {
+//       dir("cidr_convert_api/node") {
+//         steps {
+//           sshagent(['f00ff383-c25e-4332-8f82-0a153badb25a']) {
+//             sh('git push origin staging') 
+//           }
+//         }
+//       }
+//     }
