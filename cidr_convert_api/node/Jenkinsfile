@@ -47,7 +47,10 @@ pipeline {
         expression {env.BRANCH_NAME == 'dev'}
       }
       steps {
-        sh 'kubectl --kubeconfig=${env.KUBECONFIG} --namespace=development set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
+      withKubeConfig([credentialsId: 'KUBECONFIG', serverUrl: 'https://api.k8s.my-company.com']) {
+        sh 'kubectl --namespace=development set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
+      }
+        // sh 'kubectl --kubeconfig=${env.KUBECONFIG} --namespace=development set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
       }
     }
     stage ('Deploy to staging Environment') {
