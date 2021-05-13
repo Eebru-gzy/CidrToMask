@@ -8,8 +8,8 @@ describe('cidrToMaskFunction()', function () {
 
     expect("255.0.0.0").to.be.equal(cidrToMaskFunction("8"));
     expect("255.255.0.0").to.be.equal(cidrToMaskFunction("16"));
-    expect("255.255.255.0").to.be.equal(cidrToMaskFunction(""));
-    expect("255.255.255.255").to.be.equal(cidrToMaskFunction(""));
+    expect("255.255.255.0").to.be.equal(cidrToMaskFunction("24"));
+    expect("255.255.255.255").to.be.equal(cidrToMaskFunction("32"));
   });
 
   it('should return an invalid', function () {

@@ -13,10 +13,7 @@ pipeline {
     stage('Install dependencies') {
       steps {
         dir("cidr_convert_api/node") {
-          sh "pwd"
           sh 'npm install'
-          sh 'echo ${GIT_BRANCH}'
-          sh 'printenv'
         }
       }
     }
@@ -73,22 +70,3 @@ pipeline {
     }
   }
 }
-
-// stage('Checking for test error') {//
-//   steps {
-//     if (currentBuild.result == 'FAILURE') {
-//       error("Aborting the Pipeline, one or more test failed")
-//       return
-//     }
-//   }
-// }
-
-// stage('Push to staging') {
-//       dir("cidr_convert_api/node") {
-//         steps {
-//           sshagent(['f00ff383-c25e-4332-8f82-0a153badb25a']) {
-//             sh('git push origin staging') 
-//           }
-//         }
-//       }
-//     }
