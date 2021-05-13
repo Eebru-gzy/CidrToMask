@@ -17,6 +17,8 @@ pipeline {
           sh 'npm install'
           sh 'echo ${GIT_BRANCH}'
           sh 'echo $currentBuild'
+          sh 'printenv'
+          sh 'echo env'
         }
       }
     }
@@ -46,7 +48,7 @@ pipeline {
         expression {env.BRANCH_NAME == 'dev'}
       }
       steps {
-        sh 'kubectl --kubeconfig=${KUBECONFIG} --namespace=development set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
+        sh 'kubectl --kubeconfig=${env.KUBECONFIG} --namespace=development set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
       }
     }
     stage ('Deploy to staging Environment') {
