@@ -40,10 +40,7 @@ pipeline {
     }
     stage ('Deploy to Dev Environment') {
       when {
-        anyOf {
-          expression {currentBuild.BRANCH_NAME == 'origin/dev'}
-          expression {currentBuild.BRANCH_NAME == 'dev'}
-        }
+        expression {$GIT_BRANCH == 'origin/dev'}
       }
       steps {
         sh 'kubectl --kubeconfig=${KUBECONFIG} --namespace=development set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
