@@ -1,6 +1,9 @@
 pipeline {
   agent any
   tools {nodejs "NodeJs"}
+  environment{
+    BRANCH_NAME = "${GIT_BRANCH.split("/")[1]}"
+  }
   stages {
     stage('Clone Repo') {
       steps{
@@ -40,9 +43,6 @@ pipeline {
     }
     stage ('Deploy to Dev Environment') {
       when {
-        environment{
-          BRANCH_NAME = "${GIT_BRANCH.split("/")[1]}"
-        }
         expression {env.BRANCH_NAME == 'dev'}
       }
       steps {
