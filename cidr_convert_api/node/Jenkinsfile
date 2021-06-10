@@ -64,7 +64,8 @@ pipeline {
       }
       steps {
         withKubeConfig([credentialsId: 'KUBECONFIG']) {
-          sh 'kubectl --namespace=production set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
+          sh 'kubectl --namespace=pr
+          oduction set image deployment/api api=wizelinedevops/opeyemi-alao:${BUILD_NUMBER}'
         }
       }
     }
